@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Circle</title>
+  <style>
+    #circle {
+      background-color: blue;
+      margin: 20px auto;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="controls">
+    <div class="nodes">
+      <label for="node">Node</label>
+      <input type="range" min="3" max="360" value="100" class="slider" id="node">
+      <output id="nodeValue">100</output>
+    </div>
+    <div class="radius">
+      <label for="radius">Radius</label>
+      <input type="range" min="3" max="360" value="1" class="slider" id="radius">
+      <output id="radiusValue">1</output>
+    </div>
+    <div class="radius">
+      <label for="radius">x axis</label>
+      <input type="range" min="-1500" max="1500" value="1" class="slider" id="x">
+      <output id="xValue">1</output>
+    </div>
+    <div class="radius">
+      <label for="radius">y axis</label>
+      <input type="range" min="-1000" max="1000" value="1" class="slider" id="y">
+      <output id="yValue">1</output>
+    </div>
+  </div>
+
+  <div class="circle" id="circle"></div>
+
+  <script>
+    function circle() {
+      let value = "";
+      let radius = document.getElementById("radius").value;
+      let xaxis = document.getElementById("x").value;
+      let circle = document.getElementById("node").value;
+      let yaxis = document.getElementById("y").value;
+
+      for (let i = 0; i < circle; i++) {
+        let r = (i * Math.PI) / 180;
+        let x1 = (Math.sin(r) * (radius));
+        let y1 = (Math.cos(r) * (radius));
+        value += `${x1}px ${y1}px `;
+        if (i < circle - 1) value += ",";
+      }
+      value = `polygon(${value})`;
+      var shape = document.getElementById("circle");
+      shape.style.clipPath = value;
+      shape.style.marginTop = `${yaxis}px`;
+      shape.style.marginLeft = `${xaxis}px`;
+      shape.style.width = `${radius}px`;
+      shape.style.height = `${radius}px`;
+    }
+
+    window.onload = () => {
+      circle();
+    }
+
+    document.querySelectorAll('.slider').forEach(item => {
+      item.addEventListener('input', () => {
+        document.getElementById(`${item.id}Value`).textContent = item.value;
+        circle();
+      });
+    });
+  </script>
+
+</body>
+
+</html>

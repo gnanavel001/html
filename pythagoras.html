@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pythagoras</title>
+</head>
+
+<body>
+  <div style="margin-left: 60px; margin-top: 60px;">
+    <label for="findwhat">What you want to find ?</label>
+
+    <select name="findwhat" id="triangleSidesOptions" onchange="whatOptionsToShow()" onselect="whatOptionsToShow()">
+      <option value="Hypotenuse">Hypotenuse</option>
+      <option value="Adjacent">Adjacent</option>
+      <option value="Opposite">Opposite</option>
+      <option value="pythagoras">pythagoras theorem a^2 + b^2 = c^2</option>
+    </select>
+  </div>
+  <div style="display: flex;justify-content:space-evenly;padding-top: 40px;">
+    <div id="Hypotenuse">
+      <p style="text-align: center;">Hypotenuse</p>
+      <input type="number" name="" id="hypotenuse" placeholder="Hypotenuse">
+    </div>
+    <div id="Adjacent">
+      <p style="text-align: center;">Adjacent</p>
+      <input type="number" name="" id="adjacent" placeholder="Adjacent">
+    </div>
+    <div id="Opposite">
+      <p style="text-align: center;">Opposite</p>
+      <input type="number" name="" id="opposite" placeholder="Opposite">
+    </div>
+  </div>
+  <div style="display: flex; justify-content: center; margin-top: 40px;">
+    <button onclick="pythagoras()" style="padding:8px;">Submit</button>
+  </div>
+  <p id="output"></p>
+  <script>
+
+    let selectedValue;
+    function whatOptionsToShow() {
+      let dropdown = document.getElementById("triangleSidesOptions");
+      let selectedOption = dropdown.options[dropdown.selectedIndex];
+      selectedValue = selectedOption.value;
+      if (selectedValue != "pythagoras") {
+        let inputelement = document.getElementById(selectedValue).style;
+        inputelement ? inputelement.display = 'none' : '';
+      }
+      if (selectedValue != "Hypotenuse") {
+        let inputelement = document.getElementById("Hypotenuse").style;
+        inputelement ? inputelement.display = 'block' : '';
+      }
+      if (selectedValue != "Adjacent") {
+
+        let inputelement = document.getElementById("Adjacent").style;
+        inputelement ? inputelement.display = 'block' : '';
+      }
+      if (selectedValue != "Opposite") {
+        let inputelement = document.getElementById("Opposite").style;
+        inputelement ? inputelement.display = 'block' : '';
+      }
+    }
+    window.onload = (() => {
+      whatOptionsToShow();
+    })
+    //c**2 = a**2 + b**2
+    //c hyp  => c**2 = a**2 + b**2
+    //b adj  => b**2 = c**2 - a**2
+    //a opp  => a**2 = c**2 - b**2
+    function pythagoras() {
+      let value;
+      let output;
+      let inputHTML = document.getElementById("hypotenuse");
+      let hypotenuse = inputHTML.value;
+      inputHTML = document.getElementById("adjacent");
+      let adjutant = inputHTML.value;
+      inputHTML = document.getElementById("opposite");
+      let opposite = inputHTML.value;
+      switch (selectedValue) {
+        case "Hypotenuse":
+          value = Math.sqrt(adjutant ** 2 + opposite ** 2);
+          output = `Hypotenuse ${value}`;
+          break;
+        case "Adjacent":
+          value = Math.sqrt(hypotenuse ** 2 - opposite ** 2);
+          output = `Adjacent ${value}`;
+          break;
+        case "Opposite":
+          value = Math.sqrt(hypotenuse ** 2 + adjutant ** 2);
+          output = `Opposite ${value}`;
+          break;
+        case "pythagoras":
+          value = Math.sqrt(adjutant ** 2 + opposite ** 2);
+          let hyp2 = hypotenuse ** 2;
+          if (value == hyp2) {
+            output = `hence pythagoras theorem proven Hyp**2 = Adj**2 + Opp**2`;
+          } else {
+            output = `hence pythagoras theorem proven Hyp**2 = Adj**2 + Opp**2`;
+          }
+          break;
+      }
+      document.getElementById("output").innerHTML = output;
+    }
+  </script>
+</body>
+
+</html>
